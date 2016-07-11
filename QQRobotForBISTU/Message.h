@@ -1,5 +1,5 @@
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#ifndef QQROBOT_MESSAGE_H
+#define QQROBOT_MESSAGE_H
 #include "public.h"
 class Message {
 public:

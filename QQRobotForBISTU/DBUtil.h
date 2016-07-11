@@ -1,5 +1,5 @@
-#ifndef DBUTIL_H
-#define DBUTIL_H
+#ifndef QQROBOT_DBUTIL_H
+#define QQROBOT_DBUTIL_H
 #include "public.h"
 #include <mysql_connection.h>
 #include <driver.h>

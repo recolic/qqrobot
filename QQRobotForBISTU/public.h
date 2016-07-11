@@ -6,7 +6,6 @@
 //#endif
 //共用的头文件
 #include <string>
-#include <sstream>
 #include "cqp.h"
 #ifndef QQ
 typedef int64_t QQ;

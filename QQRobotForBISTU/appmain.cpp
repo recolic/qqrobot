@@ -16,7 +16,7 @@ using namespace std;
 int ac = -1; //AuthCode 调用酷Q的方法时需要用到
 bool enabled = false;
 
-Robot robot;
+static Robot robot;
 
 /* 
 * 返回应用的ApiVer、Appid，打包后将不会调用
@@ -32,7 +32,7 @@ CQEVENT(const char*, AppInfo, 0)() {
 */
 CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 	ac = AuthCode;
-	robot.setAuthCode(ac);
+	Robot::setAuthCode(ac);
 	return 0;
 }
 
@@ -99,10 +99,7 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64
 	//如果要回复消息，请调用酷Q方法发送，并且这里 return EVENT_BLOCK - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
 	//如果不回复消息，交由之后的应用/过滤器处理，这里 return EVENT_IGNORE - 忽略本条消息
 	//return EVENT_IGNORE;
-	Message *m = new Message(subType, sendTime, fromQQ, msg, font);
-	int32_t ret = robot.handleMsg(m);
-	delete m;
-	return ret;
+	return robot.handleMsg(Message(subType, sendTime, fromQQ, msg, font));
 }
 
 /*
@@ -110,10 +107,7 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
 	//return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
-	Message *m = new Message(subType, sendTime, fromGroup, fromQQ, fromAnonymous, msg, font);
-	int32_t ret = robot.handleMsg(m);
-	delete m;
-	return ret;
+	return robot.handleMsg(Message(subType, sendTime, fromGroup, fromQQ, fromAnonymous, msg, font));
 }
 
 

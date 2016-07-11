@@ -1,5 +1,5 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef QQROBOT_UTIL_H
+#define QQROBOT_UTIL_H
 #include "public.h"
 #include "DBUtil.h"
 class Util {

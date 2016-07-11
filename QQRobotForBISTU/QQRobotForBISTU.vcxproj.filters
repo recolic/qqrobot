@@ -71,9 +71,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="CQP.lib" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="cn.hylstudio.robot.json" />
     <None Include="SetupPath.bat" />
     <None Include="ClassDiagram.cd" />
@@ -97,5 +94,8 @@
     <Filter Include="Source Files\robot">
       <UniqueIdentifier>{1f7e225b-1af7-4d96-8295-3338b2c2debf}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="CQP.lib" />
   </ItemGroup>
 </Project>

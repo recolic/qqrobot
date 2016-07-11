@@ -2,7 +2,7 @@
 #include "PrivateMsgHandler.h"
 #include "DBUtil.h"
 #include "Util.h"
-
+#include "Robot.h"
 //--------------test log ------------------
 
 //--------------test log ------------------
@@ -10,16 +10,11 @@ PrivateMsgHandler::PrivateMsgHandler() {
 
 }
 
-PrivateMsgHandler::PrivateMsgHandler(int authCode) {
-	this->authCode = authCode;
-}
-
-
 PrivateMsgHandler::~PrivateMsgHandler() {
 
 }
 
-int32_t PrivateMsgHandler::handle(Message* m) {
+int32_t PrivateMsgHandler::handle(Message& m) {
 	bool reply = false;
 
 	//DBUtil db;
@@ -43,8 +38,8 @@ int32_t PrivateMsgHandler::handle(Message* m) {
 	//	t += buffer;
 	//	t += "   ";
 	//	t += res->getString("user");
-	if (m->fromQQ == Util::getMasterQQ()) {
-		CQ_sendPrivateMsg(authCode, m->fromQQ, m->content);
+	if (m.fromQQ == Util::getMasterQQ()) {
+		Robot::sendPrivateMsg(m.fromQQ, m.content);
 		test();
 	}
 	//	Sleep(1000);
@@ -57,5 +52,5 @@ int32_t PrivateMsgHandler::handle(Message* m) {
 }
 
 void PrivateMsgHandler::test() {
-	CQ_sendPrivateMsg(authCode, Util::getMasterQQ(), "hi master");
+	Robot::sendPrivateMsg(Util::getMasterQQ(), "hi master");
 }

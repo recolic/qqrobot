@@ -127,12 +127,12 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="CQP.lib" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="cn.hylstudio.robot.json" />
     <None Include="SetupPath.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="CQP.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

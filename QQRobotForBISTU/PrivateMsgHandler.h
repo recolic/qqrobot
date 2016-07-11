@@ -1,14 +1,13 @@
-#ifndef PRIVATE_MSG_HANDLER_H
-#define PRIVATE_MSG_HANDLER_H
+#ifndef QQROBOT_PRIVATE_MSG_HANDLER_H
+#define QQROBOT_PRIVATE_MSG_HANDLER_H
 #include "MsgHandler.h"
 
 class PrivateMsgHandler :
 	public MsgHandler {
 public:
 	PrivateMsgHandler();
-	PrivateMsgHandler(int authCode);
 	~PrivateMsgHandler();
-	int32_t handle(Message* m);
+	int32_t handle(Message& m);
 private:
 	void test();
 };

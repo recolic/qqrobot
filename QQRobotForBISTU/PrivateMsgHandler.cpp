@@ -3,6 +3,7 @@
 #include "DBUtil.h"
 #include "Util.h"
 #include "Robot.h"
+#include "GroupMemberInfo.h"
 //--------------test log ------------------
 
 //--------------test log ------------------
@@ -41,6 +42,16 @@ int32_t PrivateMsgHandler::handle(Message& m) {
 	if (m.fromQQ == Util::getMasterQQ()) {
 		Robot::sendPrivateMsg(m.fromQQ, m.content);
 		test();
+
+		GroupMemberInfo info;
+		string infoString(Robot::getGroupMemberInfo(20103153, 294269440, true));
+		info.parse(infoString);
+		Robot::sendToMaster(infoString);
+		char* ret = new char[50];
+		sprintf(ret,"%d",info.groupCard);
+		Robot::sendToMaster(info.groupCard);
+
+		delete ret;
 	}
 	//	Sleep(1000);
 	reply = true;

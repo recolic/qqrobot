@@ -32,11 +32,17 @@ public:
 	static void setAuthCode(int ac);
 	//发送群聊
 	static void sendGroupMsg(QQ groupid, const char *msg);
+	static void sendGroupMsg(QQ groupid, const string &msg);
 	//发送私聊
 	static void sendPrivateMsg(QQ QQID, const char *msg);
+	static void sendPrivateMsg(QQ QQID, const string &msg);
+	static void sendToMaster(const char* msg);
+	static void sendToMaster(const string& msg);
+
 	//增加日志记录
 	static void addLog(int32_t priority, const char *category, const char *content);
-	//点赞
+	static void addLog(int32_t priority, const char *category, const string& content);
+	//点赞,air不支持
 	static void sendLike(QQ QQID);
 	//从群里踢出
 	static void setGroupKick(GroupId groupid, QQ QQID, CQBOOL isRejectAddRequestAgain);
@@ -50,7 +56,7 @@ public:
 	static void setGroupAnonymousBan(GroupId groupid, const char *anomymous, int64_t duration);
 	//设置是否允许匿名
 	static void setGroupAnonymous(GroupId groupid, CQBOOL enableAnomymous);
-	//发送群卡片
+	//设置群名片
 	static void setGroupCard(GroupId groupid, QQ QQID, const char *newCard);
 	//退群
 	static void setGroupLeave(GroupId groupid, CQBOOL isDismiss);
@@ -62,15 +68,19 @@ public:
 	static void setFriendAddRequest(const char *responseFlag, int32_t responseOperation, const char *remark);
 	//接收加群请求
 	static void setGroupAddRequest(const char *responseFlag, int32_t requestType, int32_t responseOperation, const char *reason);
-
-
+	//获取群成员信息
+	static const char * getGroupMemberInfo(GroupId groupid, QQ QQID, CQBOOL nocache);
+	static const char * getGroupMemberInfo(GroupId groupid, QQ QQID, bool nocache);
+	//获取陌生人信息
+	static const char * getStrangerInfo(QQ QQID, CQBOOL nocache);
+	static const char * getStrangerInfo(QQ QQID, bool nocache);
+	//获取cookies
+	static const char * getCookies();
 };
 #endif
 
 /*
-CQAPI(const char *) CQ_getGroupMemberInfoV2(int32_t AuthCode, GroupId groupid, QQ QQID, CQBOOL nocache);
-CQAPI(const char *) CQ_getStrangerInfo(int32_t AuthCode, QQ QQID, CQBOOL nocache);
-CQAPI(const char *) CQ_getCookies(int32_t AuthCode);
+
 static void getCsrfToken(int32_t AuthCode);
 CQAPI(int64_t) CQ_getLoginQQ(int32_t AuthCode);
 CQAPI(const char *) CQ_getLoginNick(int32_t AuthCode);

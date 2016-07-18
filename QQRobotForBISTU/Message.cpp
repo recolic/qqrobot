@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Message.h"
+#include "Util.h"
 
 
 Message::Message() {
@@ -23,6 +24,10 @@ Message::Message(int32_t subType, int32_t sendTime, GroupId fromGroup, QQ fromQQ
 	this->fromAnonymous = fromAnonymous;
 	this->content = content;
 	this->font = font;
+}
+
+bool Message::isFromMaster() {
+	return fromQQ == Util::getMasterQQ();
 }
 
 

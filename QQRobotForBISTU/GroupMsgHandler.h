@@ -3,6 +3,8 @@
 #include "MsgHandler.h"
 class GroupMsgHandler :
 	public MsgHandler {
+private:
+	void test();
 public:
 	GroupMsgHandler();
 	~GroupMsgHandler();

@@ -59,12 +59,32 @@ void Robot::sendGroupMsg(QQ groupid, const char *msg) {
 	CQ_sendGroupMsg(authCode, groupid, msg);
 }
 
+void Robot::sendGroupMsg(QQ groupid, const string & msg) {
+	sendGroupMsg(groupid, msg.c_str());
+}
+
 void Robot::sendPrivateMsg(QQ QQID, const char * msg) {
 	CQ_sendPrivateMsg(authCode, QQID, msg);
 }
 
+void Robot::sendPrivateMsg(QQ QQID, const string & msg) {
+	sendPrivateMsg(QQID, msg.c_str());
+}
+
+void Robot::sendToMaster(const char * msg) {
+	sendPrivateMsg(Util::getMasterQQ(), msg);
+}
+
+void Robot::sendToMaster(const string & msg) {
+	sendPrivateMsg(Util::getMasterQQ(), msg);
+}
+
 void Robot::addLog(int32_t priority, const char * category, const char * content) {
 	CQ_addLog(authCode, priority, category, content);
+}
+
+void Robot::addLog(int32_t priority, const char * category, const string & content) {
+	addLog(priority, category, content.c_str());
 }
 
 void Robot::sendLike(QQ QQID) {
@@ -117,5 +137,33 @@ void Robot::setFriendAddRequest(const char * responseFlag, int32_t responseOpera
 
 void Robot::setGroupAddRequest(const char * responseFlag, int32_t requestType, int32_t responseOperation, const char * reason) {
 	CQ_setGroupAddRequestV2(authCode, responseFlag, requestType, responseOperation, reason);
+}
+
+const char* Robot::getGroupMemberInfo(GroupId groupid, QQ QQID, CQBOOL noCache) {
+	return CQ_getGroupMemberInfoV2(authCode, groupid, QQID, noCache);
+}
+
+const char * Robot::getGroupMemberInfo(GroupId groupid, QQ QQID, bool nocache) {
+	if (nocache) {
+		return CQ_getGroupMemberInfoV2(authCode, groupid, QQID, 1);
+	} else {
+		return CQ_getGroupMemberInfoV2(authCode, groupid, QQID, 0);
+	}
+}
+
+const char * Robot::getStrangerInfo(QQ QQID, CQBOOL nocache) {
+	return CQ_getStrangerInfo(authCode, QQID, nocache);
+}
+
+const char * Robot::getStrangerInfo(QQ QQID, bool nocache) {
+	if (nocache) {
+		return CQ_getStrangerInfo(authCode, QQID, 1);
+	} else {
+		return CQ_getStrangerInfo(authCode, QQID, 0);
+	}
+}
+
+const char * Robot::getCookies() {
+	return CQ_getCookies(authCode);
 }
 

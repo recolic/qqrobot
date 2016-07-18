@@ -94,9 +94,11 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
     <ClInclude Include="appmain.h" />
     <ClInclude Include="cqp.h" />
     <ClInclude Include="DBUtil.h" />
+    <ClInclude Include="GroupMemberInfo.h" />
     <ClInclude Include="GroupMsgHandler.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MsgHandler.h" />
+    <ClInclude Include="PersonInfo.h" />
     <ClInclude Include="PrivateMsgHandler.h" />
     <ClInclude Include="public.h" />
     <ClInclude Include="Robot.h" />
@@ -115,9 +117,11 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="GroupMemberInfo.cpp" />
     <ClCompile Include="GroupMsgHandler.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="MsgHandler.cpp" />
+    <ClCompile Include="PersonInfo.cpp" />
     <ClCompile Include="PrivateMsgHandler.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="stdafx.cpp">

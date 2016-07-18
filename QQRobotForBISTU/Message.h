@@ -6,6 +6,7 @@ public:
 	Message();
 	Message(int32_t subType, int32_t sendTime, QQ fromQQ, const char *content, int32_t font);
 	Message(int32_t subType, int32_t sendTime, GroupId fromGroup, QQ fromQQ, const char *fromAnonymous, const char *content, int32_t font);
+	bool isFromMaster();
 	~Message();
 	int msgType;//0私聊,1群聊
 	//subType 子类型，

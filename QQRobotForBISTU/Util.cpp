@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Util.h"
-
+#include "CQCode.h"
 const string Util::base64_chars = 
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "abcdefghijklmnopqrstuvwxyz"
@@ -103,13 +103,21 @@ string Util::encode(unsigned char const *bytesToBeEncode, unsigned int len) {
 
 }
 
-string Util::getWelComeMsg() {
+string Util::getWelComeMsg(GroupId groupId,QQ qq) {
 	string welCome;
-	welCome += "[CQ:face,id=137]欢迎加入本群。\n"
-		"[CQ:face,id=137]请自行删掉叹号，按格式(16 地区 真实姓名)修改名片~~\n"
+	char* buff = new char[20];
+	sprintf(buff,"%d", qq);
+	welCome += "[CQ:face,id=137]欢迎" + CQCode::at(qq) + "(" + string(buff) + ")加入本群。\n"
+		"[CQ:face,id=137]请自行删掉叹号，按格式(16";
+	if (groupId == 513289848) {
+		welCome += "专业";
+	} else {
+		welCome += " 地区";
+	}
+	welCome += " 真实姓名)修改名片~~\n"
 		"[CQ:face,id=137]请仔细阅读群须知&群公告后再来提问QAQ。。。\n"
 		"[CQ:face,id=137]群文件和相册也有一些资料可以参考~\n"
-		"ps：严禁调戏小冰！违者小冰会很严肃的处理你哦~！";
-
+		"ps：严禁调戏机器人！违者禁言！！";
+	delete buff;
 	return welCome;
 }

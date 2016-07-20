@@ -12,7 +12,7 @@ public:
 	static QQ getMasterQQ();
 	static string decode(const string & stringToBeDecode);
 	static string encode(unsigned char const* bytesToBeEncode, unsigned int len);
-	static string getWelComeMsg();
+	static string getWelComeMsg(GroupId groupId, QQ qq);
 };
 
 #endif // !UTIL_H

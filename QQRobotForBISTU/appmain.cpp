@@ -62,7 +62,12 @@ CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime,
 * beingOperateQQ 被操作QQ(即加群的QQ)
 */
 CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
-	Robot::sendGroupMsg(fromGroup, Util::getWelComeMsg());
+	Robot::sendGroupMsg(fromGroup, Util::getWelComeMsg(fromGroup, beingOperateQQ));
+	if (fromGroup == 513289848) {
+		Robot::setGroupCard(fromGroup, beingOperateQQ, "!16专业 真实姓名");
+	} else {
+		Robot::setGroupCard(fromGroup, beingOperateQQ, "!16 地区 真实姓名");
+	}
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
 
@@ -119,26 +124,26 @@ CQEVENT(int32_t, __eventDisable, 0)() {
 	return 0;
 }
 
-
-/*
-* Type=21 私聊消息
-* subType 子类型，11/来自好友 1/来自在线状态 2/来自群 3/来自讨论组
-*/
-CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, int32_t font) {
-	//如果要回复消息，请调用酷Q方法发送，并且这里 return EVENT_BLOCK - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
-	//如果不回复消息，交由之后的应用/过滤器处理，这里 return EVENT_IGNORE - 忽略本条消息
-	//return EVENT_IGNORE;
-	return robot.handleMsg(Message(subType, sendTime, fromQQ, msg, font));
-}
-
-/*
-* Type=2 群消息
-*/
-CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-	//return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
-	return robot.handleMsg(Message(subType, sendTime, fromGroup, fromQQ, fromAnonymous, msg, font));
-}
-
+//
+///*
+//* Type=21 私聊消息
+//* subType 子类型，11/来自好友 1/来自在线状态 2/来自群 3/来自讨论组
+//*/
+//CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, int32_t font) {
+//	//如果要回复消息，请调用酷Q方法发送，并且这里 return EVENT_BLOCK - 截断本条消息，不再继续处理  注意：应用优先级设置为"最高"(10000)时，不得使用本返回值
+//	//如果不回复消息，交由之后的应用/过滤器处理，这里 return EVENT_IGNORE - 忽略本条消息
+//	//return EVENT_IGNORE;
+//	return robot.handleMsg(Message(subType, sendTime, fromQQ, msg, font));
+//}
+//
+///*
+//* Type=2 群消息
+//*/
+//CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
+//	//return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
+//	return robot.handleMsg(Message(subType, sendTime, fromGroup, fromQQ, fromAnonymous, msg, font));
+//}
+//
 
 /*
 * 菜单，可在 .json 文件中设置菜单数目、函数名

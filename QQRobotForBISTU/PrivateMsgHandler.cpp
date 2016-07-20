@@ -40,18 +40,18 @@ int32_t PrivateMsgHandler::handle(Message& m) {
 	//	t += "   ";
 	//	t += res->getString("user");
 	if (m.fromQQ == Util::getMasterQQ()) {
-		Robot::sendPrivateMsg(m.fromQQ, m.content);
-		test();
+		//Robot::sendPrivateMsg(m.fromQQ, m.content);
+		//test();
 
-		GroupMemberInfo info;
-		string infoString(Robot::getGroupMemberInfo(20103153, 294269440, true));
-		info.parse(infoString);
-		Robot::sendToMaster(infoString);
-		char* ret = new char[50];
-		sprintf(ret,"%d",info.groupCard);
-		Robot::sendToMaster(info.groupCard);
+		//GroupMemberInfo info;
+		//string infoString(Robot::getGroupMemberInfo(20103153, 294269440, true));
+		//info.parse(infoString);
+		//Robot::sendToMaster(infoString);
+		//char* ret = new char[50];
+		//sprintf(ret,"%d",info.groupCard);
+		//Robot::sendToMaster(info.groupCard);
 
-		delete ret;
+		//delete ret;
 	}
 	//	Sleep(1000);
 	reply = true;

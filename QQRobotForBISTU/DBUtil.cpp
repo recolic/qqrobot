@@ -53,9 +53,6 @@ DBUtil::DBUtil() {
 	//url = "tcp://hostname:3306";
 	//username = "username";
 	//password = "password";
-	url = "tcp://lz.hylstudio.cn:3306";
-	username = "lizhen";
-	password = "lizhen";
 	getConnection(url, username, password);
 }
 
@@ -72,7 +69,7 @@ void DBUtil::example() {
 		if (driver != NULL)
 			//CQ_addLog(authCode, CQLOG_INFORECV, "db", "driver load success");
 		//连接数据库  
-		conn = driver->connect("tcp://lz.hylstudio.cn:3306", "lizhen", "lizhen");
+		conn = driver->connect("tcp://lz.hylstudio.cn:3306", "", "");
 		if (conn != NULL) {
 			//CQ_addLog(authCode, CQLOG_INFORECV, "db", "connect success");
 		} else {

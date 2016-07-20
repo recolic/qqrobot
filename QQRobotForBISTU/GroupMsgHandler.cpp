@@ -3,7 +3,7 @@
 #include "Util.h"
 #include "Robot.h"
 #include "PersonInfo.h"
-
+#include "CQCode.h"
 GroupMsgHandler::GroupMsgHandler() {
 }
 
@@ -15,6 +15,9 @@ int32_t GroupMsgHandler::handle(Message& m) {
 	if (m.isFromMaster()) {
 		//Robot::sendGroupMsg(m.fromGroup, "hi master~");
 		//Robot::addLog(CQLOG_INFOSEND, "test", "hi~master~~");
+		//string str = CQCode::image("0A535B0E538FFAE8A1AA6AEF7CA61F6C.jpg.cqimg");
+		//Robot::sendGroupMsg(m.fromGroup, Util::getWelComeMsg());
+		//Robot::addLog(CQLOG_INFOSEND, "test",str);
 	}
 	test();
 	reply = true;

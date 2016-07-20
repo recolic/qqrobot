@@ -49,7 +49,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>cn.hylstudio.robot</TargetName>
     <OutDir>.\Release</OutDir>
-    <LibraryPath>E:\Program Files\boost_1_61_0\stage\lib;E:\Program Files %28x86%29\mysql-5.7.13-win32\lib;E:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib\opt;$(LibraryPath)</LibraryPath>
+    <LibraryPath>E:\Program Files\boost_1_61_0\stage\lib;E:\Program Files %28x86%29\mysql-5.7.13-win32\lib;E:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>E:\Program Files\boost_1_61_0;E:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include\cppconn;E:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -101,6 +101,7 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
     <ClInclude Include="PersonInfo.h" />
     <ClInclude Include="PrivateMsgHandler.h" />
     <ClInclude Include="public.h" />
+    <ClInclude Include="CQCode.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -123,6 +124,7 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
     <ClCompile Include="MsgHandler.cpp" />
     <ClCompile Include="PersonInfo.cpp" />
     <ClCompile Include="PrivateMsgHandler.cpp" />
+    <ClCompile Include="CQCode.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

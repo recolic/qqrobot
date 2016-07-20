@@ -37,6 +37,9 @@
     <ClCompile Include="GroupMemberInfo.cpp">
       <Filter>Source Files\robot</Filter>
     </ClCompile>
+    <ClCompile Include="CQCode.cpp">
+      <Filter>Source Files\robot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="appmain.h">
@@ -79,6 +82,9 @@
       <Filter>Header Files\robot</Filter>
     </ClInclude>
     <ClInclude Include="PersonInfo.h">
+      <Filter>Header Files\robot</Filter>
+    </ClInclude>
+    <ClInclude Include="CQCode.h">
       <Filter>Header Files\robot</Filter>
     </ClInclude>
   </ItemGroup>

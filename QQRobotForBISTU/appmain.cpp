@@ -152,6 +152,17 @@ CQEVENT(int32_t, __eventDisable, 0)() {
 //
 
 /*
+* Type=301 请求-好友添加
+* msg 附言
+* responseFlag 反馈标识(处理请求用)
+*/
+CQEVENT(int32_t, __eventRequest_AddFriend, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, const char *responseFlag) {
+
+	//CQ_setFriendAddRequest(ac, responseFlag, REQUEST_ALLOW, "");
+	Robot::setFriendAddRequest(responseFlag, REQUEST_DENY, "");
+	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
+}
+/*
 * 菜单，可在 .json 文件中设置菜单数目、函数名
 * 如果不使用菜单，请在 .json 及此处删除无用菜单
 */

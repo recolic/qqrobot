@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DBUtil.h"
 
-sql::Connection* DBUtil::getConnection(string url, string username, string password) {
+sql::Connection* DBUtil::connect(string url, string username, string password) {
 	//try {
 		//获取驱动实例
 		driver = get_driver_instance();
@@ -30,6 +30,10 @@ sql::Connection* DBUtil::getConnection(string url, string username, string passw
 	return this->conn;
 }
 
+sql::Connection * DBUtil::getConnection() {
+	return conn;
+}
+
 bool DBUtil::isConnected() {
 	return conn != NULL;
 }
@@ -39,13 +43,32 @@ void DBUtil::use(string dbName) {
 }
 
 sql::ResultSet * DBUtil::executeQuery(string sql) {
-	sql::Statement* stmt = conn->createStatement();
-	sql::ResultSet* res = stmt->executeQuery(sql);
-	return res;
+	sql::Statement* stmt = createStatement();
+	return stmt->executeQuery(sql);
 }
+
+int DBUtil::executeUpdate(string sql) {
+	sql::Statement* stmt = createStatement();
+	return stmt->execute(sql);
+}
+
+
 
 void DBUtil::close() {
 	conn->close();
+}
+
+sql::Statement * DBUtil::createStatement() {
+	return conn->createStatement();
+}
+
+sql::PreparedStatement * DBUtil::prepareStatement(string sql) {
+	return conn->prepareStatement(sql);
+}
+
+bool DBUtil::execute(string sql) {
+	sql::Statement *stmt = createStatement();
+	return stmt->execute(sql);;
 }
 
 
@@ -53,7 +76,7 @@ DBUtil::DBUtil() {
 	//url = "tcp://hostname:3306";
 	//username = "username";
 	//password = "password";
-	getConnection(url, username, password);
+	connect(url, username, password);
 }
 
 DBUtil::~DBUtil() {

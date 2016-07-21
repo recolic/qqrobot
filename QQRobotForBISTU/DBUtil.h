@@ -16,7 +16,9 @@ private:
 	void example();
 public:
 	//连接数据库
-	sql::Connection* getConnection(string url, string username, string password);
+	sql::Connection* connect(string url, string username, string password);
+	//获取链接
+	sql::Connection* getConnection();
 	//判断当前是否连接成功
 	bool isConnected();
 	//切换数据库
@@ -24,8 +26,11 @@ public:
 	//关闭数据库
 	void close();
 	//执行查询sql
+	sql::Statement* createStatement();
+	sql::PreparedStatement* prepareStatement(string sql);
+	bool execute(string sql);
 	sql::ResultSet* executeQuery(string sql);
-
+	int executeUpdate(string sql);
 	DBUtil();
 	~DBUtil();
 };

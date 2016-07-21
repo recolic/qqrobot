@@ -11,8 +11,8 @@ private:
 	string url;
 	string username;
 	string password;
-	sql::Driver *driver;
-	sql::Connection *conn;
+	static sql::Driver *driver;
+	static sql::Connection *conn;
 	void example();
 public:
 	//连接数据库

@@ -1,19 +1,24 @@
 #include "stdafx.h"
 #include "DBUtil.h"
+sql::Driver* DBUtil::driver = NULL;
+sql::Connection* DBUtil::conn = NULL;
 
 sql::Connection* DBUtil::connect(string url, string username, string password) {
 	//try {
 		//获取驱动实例
-		driver = get_driver_instance();
-		if (driver != NULL) {
-			//连接数据库  
-			conn = driver->connect(url, username, password);
-		} else {
+		if (driver == NULL) {
+			driver = get_driver_instance();
+		}
+		if(driver == NULL) {
 			//驱动获取失败
 		}
-		if (conn != NULL) {
+
+		if (conn == NULL) {
+			//连接数据库  
+			conn = driver->connect(url, username, password);
 			//连接成功
-		} else {
+		}
+		if (conn == NULL){
 			//连接失败
 		}
 		
@@ -80,7 +85,7 @@ DBUtil::DBUtil() {
 }
 
 DBUtil::~DBUtil() {
-	delete this->conn;
+	
 }
 
 void DBUtil::example() {

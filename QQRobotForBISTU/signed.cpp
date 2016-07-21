@@ -129,7 +129,6 @@ bool Signed::isFirstSigned() {
 
 void Signed::success() {
 	char buff[100];
-	reply += string(buff);
 	int t = maxTimes * 10;
 	sprintf(buff, "签到成功~~\n你是今天第%d个签到的~\n已连续%d天，奖励金币%d,请继续坚持~\n当前余额%d。", 
 		getTimes(), maxTimes, t, score + t);

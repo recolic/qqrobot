@@ -40,6 +40,9 @@
     <ClCompile Include="CQCode.cpp">
       <Filter>Source Files\robot</Filter>
     </ClCompile>
+    <ClCompile Include="signed.cpp">
+      <Filter>Source Files\robot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="appmain.h">
@@ -87,11 +90,14 @@
     <ClInclude Include="CQCode.h">
       <Filter>Header Files\robot</Filter>
     </ClInclude>
+    <ClInclude Include="signed.h">
+      <Filter>Header Files\robot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cn.hylstudio.robot.json" />
     <None Include="SetupPath.bat" />
     <None Include="ClassDiagram.cd" />
+    <None Include="cn.hylstudio.robot.signed.json" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

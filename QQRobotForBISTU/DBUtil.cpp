@@ -73,9 +73,9 @@ bool DBUtil::execute(string sql) {
 
 
 DBUtil::DBUtil() {
-	//url = "tcp://hostname:3306";
-	//username = "username";
-	//password = "password";
+	url = "tcp://lzhub.cn:3306";
+	username = "lz";
+	password = "lizhen";
 	connect(url, username, password);
 }
 

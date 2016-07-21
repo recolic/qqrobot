@@ -47,7 +47,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>cn.hylstudio.robot</TargetName>
+    <TargetName>cn.hylstudio.robot.signed</TargetName>
     <OutDir>.\Release</OutDir>
     <LibraryPath>E:\Program Files\boost_1_61_0\stage\lib;E:\Program Files %28x86%29\mysql-5.7.13-win32\lib;E:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>E:\Program Files\boost_1_61_0;E:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include\cppconn;E:\Program Files %28x86%29\MySQL\MySQL Connector C++ 1.1.7\include;$(IncludePath)</IncludePath>
@@ -85,8 +85,8 @@
     </Link>
     <PostBuildEvent>
       <Command>mkdir "..\outputFiles"
-copy ".\Release\cn.hylstudio.robot.dll" "..\outputFiles"
-copy ".\cn.hylstudio.robot.json" "..\outputFiles"
+copy ".\Release\cn.hylstudio.robot.signed.dll" "..\outputFiles"
+copy ".\cn.hylstudio.robot.signed.json" "..\outputFiles"
 .\SetupPath.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -103,6 +103,7 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
     <ClInclude Include="public.h" />
     <ClInclude Include="CQCode.h" />
     <ClInclude Include="Robot.h" />
+    <ClInclude Include="signed.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Util.h" />
@@ -126,6 +127,7 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
     <ClCompile Include="PrivateMsgHandler.cpp" />
     <ClCompile Include="CQCode.cpp" />
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="signed.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -134,7 +136,7 @@ copy ".\cn.hylstudio.robot.json" "..\outputFiles"
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-    <None Include="cn.hylstudio.robot.json" />
+    <None Include="cn.hylstudio.robot.signed.json" />
     <None Include="SetupPath.bat" />
   </ItemGroup>
   <ItemGroup>

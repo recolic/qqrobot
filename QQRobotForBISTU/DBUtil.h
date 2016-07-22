@@ -10,13 +10,14 @@
 #include <list>
 class DBUtil {
 private:
+	int flag;
 	string url;
 	string username;
 	string password;
 	int size;
 	int curSize;
 	int maxSize;
-	list<sql::Connection *> connList;
+	static list<sql::Connection *> connList;
 	sql::Driver *driver;
 	void example();
 public:
@@ -33,13 +34,14 @@ public:
 
 
 	//初始化连接池，创建最大连接数的一半连接数量
-	void initConnections(int iInitialSize);
+	void initConnections();
 	//创建连接,返回一个Connection
 	sql::Connection* createConnection();
 	//回收数据库连接
 	void releaseConnection(sql::Connection * conn);
 	//销毁一个连接
 	void destoryConnection(sql::Connection* conn);
+	void refreshConnections();
 };
 
 #endif

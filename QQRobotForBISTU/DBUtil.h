@@ -41,6 +41,7 @@ public:
 	void releaseConnection(sql::Connection * conn);
 	//销毁一个连接
 	void destoryConnection(sql::Connection* conn);
+	void refreshConnections();
 };
 
 #endif

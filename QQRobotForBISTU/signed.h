@@ -10,7 +10,6 @@ private:
 	string lastTime;
 	int	maxTimes;
 	int score;
-	static DBUtil db;
 	bool exist();
 	int insertQQ();
 	int initSignRecord();
@@ -19,6 +18,7 @@ private:
 	bool isFirstSigned();
 	void success();
 public:
+	static DBUtil db;
 	int sign(Message& m);
 	Signed();
 	Signed(Message& mm);

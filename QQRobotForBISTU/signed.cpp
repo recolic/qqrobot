@@ -13,7 +13,6 @@
 #include "CQCode.h"
 
 DBUtil Signed::db;
-
 bool Signed::exist() {
 	string sql = "SELECT * FROM db_users.t_users where qq=?";
 	sql::PreparedStatement* stmt = db.prepareStatement(sql);

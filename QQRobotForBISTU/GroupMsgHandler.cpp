@@ -6,6 +6,7 @@
 #include "CQCode.h"
 #include "signed.h"
 #include <regex>
+int GroupMsgHandler::flag = 0;
 GroupMsgHandler::GroupMsgHandler() {
 }
 
@@ -24,7 +25,15 @@ int32_t GroupMsgHandler::handle(Message& m) {
 	if (!content.compare("签到")) {
 		Signed s(m);
 		reply = true;
-	}/* else {
+	} else {
+		if (flag == 0) {
+			flag = 1;
+			Robot::addLog(CQLOG_DEBUG, "db", "init");
+			Signed::db.initConnections();
+		}
+	}
+	
+	/* else {
 		if (!content.substr(0, 1).compare("#")) {
 			if (m.isFromMaster()) {
 			}

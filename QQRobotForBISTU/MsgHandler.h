@@ -5,6 +5,7 @@
 
 class MsgHandler {
 public:
+	static int flag;
 	MsgHandler();
 	virtual int32_t  handle(Message& m);
 protected:

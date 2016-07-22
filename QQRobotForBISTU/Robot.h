@@ -5,7 +5,7 @@
 #include "MsgHandler.h"
 #include "PrivateMsgHandler.h"
 #include "GroupMsgHandler.h"
-
+#include "signed.h"
 class Robot {
 private:
 	static int authCode;//ÊÚÈ¨Âë

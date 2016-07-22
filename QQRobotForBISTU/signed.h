@@ -2,15 +2,15 @@
 #define SIGNED_H
 #include "public.h"
 #include "Message.h"
-
+#include "DBUtil.h"
 class Signed {
 private:
 	QQ qq;
-	Message& m;
 	string reply;
 	string lastTime;
 	int	maxTimes;
 	int score;
+	static DBUtil db;
 	bool exist();
 	int insertQQ();
 	int initSignRecord();
@@ -19,7 +19,8 @@ private:
 	bool isFirstSigned();
 	void success();
 public:
-	int sign();
+	int sign(Message& m);
+	Signed();
 	Signed(Message& mm);
 	~Signed();
 };

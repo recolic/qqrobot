@@ -12,8 +12,9 @@
 #include "Message.h"
 #include "CQCode.h"
 
+DBUtil Signed::db;
+
 bool Signed::exist() {
-	DBUtil db;
 	string sql = "SELECT * FROM db_users.t_users where qq=?";
 	sql::PreparedStatement* stmt = db.prepareStatement(sql);
 	stmt->setInt(1, qq);
@@ -22,13 +23,14 @@ bool Signed::exist() {
 	if (ret) {
 		score = res->getInt(3);
 	}
+	delete stmt;
+	delete res;
 	return ret;
 }
 
 int Signed::insertQQ() {
 	int ret = -1;
 	//如果没有
-	DBUtil db;
 	string sql = "INSERT INTO `db_users`.`t_users` (`qq`,`nickname`,`score`,`enabled`)"
 		" VALUES(?,?,?,?);";
 	sql::PreparedStatement* stmt = db.prepareStatement(sql);
@@ -38,22 +40,24 @@ int Signed::insertQQ() {
 	stmt->setString(2, buff);
 	stmt->setInt(3, 100);
 	stmt->setInt(4, 1);
-	return stmt->executeUpdate();
+	ret = stmt->executeUpdate();
+	delete stmt;
+	return ret;
 }
 
 int Signed::initSignRecord() {
 	int ret = -1;
-	DBUtil db;
 	//之前没签过
 	string sql = "INSERT INTO `db_users`.`t_signedrecord`(`qq`,`lastTime`,`maxTimes`) "
 		" VALUES(?, curdate(), 1)";
 	sql::PreparedStatement* stmt = db.prepareStatement(sql);
 	stmt->setInt(1, qq);
-	return stmt->executeUpdate();
+	ret = stmt->executeUpdate();
+	delete stmt;
+	return ret;
 }
 
 int Signed::updateRecord() {
-	DBUtil db;
 	//如果有
 	string sql = "UPDATE `db_users`.`t_signedrecord` SET "
 		"`lastTime` = curdate(),"
@@ -64,29 +68,30 @@ int Signed::updateRecord() {
 	stmt->setInt(2, qq);
 	int ret = -2;
 	ret += stmt->executeUpdate();
-
-	sql = "UPDATE `db_users`.`t_users` SET `score` = score + ? WHERE `qq` = ?;";
 	delete stmt;
+	
+	sql = "UPDATE `db_users`.`t_users` SET `score` = score + ? WHERE `qq` = ?;";
 	stmt = db.prepareStatement(sql);
 	stmt->setInt(1, maxTimes * 10);
 	stmt->setInt(2, qq);
 	ret += stmt->executeUpdate();
-
+	delete stmt;
 	return ret;
 }
 
 int Signed::getTimes() {
-	DBUtil db;
 	string sql = "select count(*) from `db_users`.`t_signedrecord` where lastTime = curdate();";
 	sql::PreparedStatement *stmt = db.prepareStatement(sql);
 	sql::ResultSet* res = stmt->executeQuery();
 	res->next();
-	return res->getInt(1);
+	int ret = res->getInt(1);
+	delete res;
+	delete stmt;
+	return ret;
 }
 
 bool Signed::isFirstSigned() {
 	bool ret;
-	DBUtil db;
 	string sql = "SELECT * FROM db_users.t_signedrecord where qq=?";
 	sql::PreparedStatement* stmt = db.prepareStatement(sql);
 	stmt->setInt(1, qq);
@@ -124,6 +129,8 @@ bool Signed::isFirstSigned() {
 	}else{
 		ret = true;
 	}
+	delete res;
+	delete stmt;
 	return ret;
 }
 
@@ -135,8 +142,11 @@ void Signed::success() {
 	reply += string(buff);
 }
 
-int Signed::sign() {
+int Signed::sign(Message & m) {
+	maxTimes = 1;
+	score = 100;
 	int ret = 0;
+	qq = m.fromQQ;
 	reply = CQCode::at(m.fromQQ);
 	if (!exist()) {
 		ret += insertQQ();
@@ -156,11 +166,11 @@ int Signed::sign() {
 	return ret;
 }
 
-Signed::Signed(Message & mm):m(mm){
-	this->qq = mm.fromQQ;
-	maxTimes = 1;
-	score = 100;
-	sign();
+Signed::Signed() {
+}
+
+Signed::Signed(Message & m){
+	sign(m);
 }
 
 Signed::~Signed() {

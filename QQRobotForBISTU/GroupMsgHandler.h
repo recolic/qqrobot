@@ -1,6 +1,7 @@
 #ifndef QQROBOT_GROUP_MSG_HANDLER_H
 #define QQROBOT_GROUP_MSG_HANDLER_H
 #include "MsgHandler.h"
+#include "signed.h"
 class GroupMsgHandler :
 	public MsgHandler {
 private:

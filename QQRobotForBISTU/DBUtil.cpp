@@ -69,9 +69,6 @@ DBUtil::DBUtil() {
 	//this->url = "tcp://hostname:3306";
 	//this->username = "";
 	//this->password = "";
-	this->url = "tcp://lzhub.cn:3306";
-	this->username = "lz";
-	this->password = "lizhen";
 	try {
 		this->driver = get_driver_instance();
 	} catch (sql::SQLException&e) {

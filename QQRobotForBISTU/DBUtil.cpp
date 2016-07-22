@@ -1,13 +1,15 @@
 #include "stdafx.h"
 #include "DBUtil.h"
 #include "Robot.h"
+list<sql::Connection *> DBUtil::connList;
 sql::Connection * DBUtil::getConnection() {
 	sql::Connection*con;
-
+	Robot::addLog(CQLOG_DEBUG, "db", "get connection");
 	if (connList.size() > 0) {   //连接池容器中还有连接
 		con = connList.front(); //得到第一个连接
 		connList.pop_front();   //移除第一个连接
 		if (con->isClosed()) {   //如果连接已经被关闭，删除后重新建立一个
+			con->close();
 			delete con;
 			con = this->createConnection();
 		}
@@ -76,7 +78,7 @@ DBUtil::DBUtil() {
 		Robot::addLog(CQLOG_ERROR, "db", "运行出错了");
 		perror("运行出错了\n");
 	}
-	this->initConnections(maxSize / 2);
+	//initConnections();
 }
 
 DBUtil::~DBUtil() {
@@ -88,10 +90,12 @@ DBUtil::~DBUtil() {
 	connList.clear(); //清空连接池中的连接
 }
 
-void DBUtil::initConnections(int iInitialSize) {
+void DBUtil::initConnections() {
+	int iInitialSize = maxSize / 2;
 	sql::Connection* conn;
 	for (int i = 0; i < iInitialSize; i++) {
 		conn = this->createConnection();
+		Robot::addLog(CQLOG_DEBUG, "db", "create connection");
 		if (conn) {
 			connList.push_back(conn);
 			++(this->curSize);

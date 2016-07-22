@@ -5,29 +5,42 @@ list<sql::Connection *> DBUtil::connList;
 sql::Connection * DBUtil::getConnection() {
 	sql::Connection*con;
 	Robot::addLog(CQLOG_DEBUG, "db", "get connection");
+
+	char buff[50];
+	sprintf(buff, "size=%d,cursize=%d",size, curSize);
 	if (connList.size() > 0) {   //连接池容器中还有连接
 		con = connList.front(); //得到第一个连接
 		connList.pop_front();   //移除第一个连接
-		if (con->isClosed()) {   //如果连接已经被关闭，删除后重新建立一个
-			con->close();
-			delete con;
-			con = this->createConnection();
+		Robot::addLog(CQLOG_DEBUG, "db", "get first cached conn");
+		if (!con->isValid()) {   //如果连接已经被关闭，删除后重新建立一个
+			Robot::addLog(CQLOG_DEBUG, "db", "conn closed,get new");
+			if (!con->reconnect()) {
+				con->close();
+				delete con;
+				con = this->createConnection();
+			}
+			refreshConnections();
 		}
 		//如果连接为空，则创建连接出错
 		if (con == NULL) {
 			--curSize;
 		}
+		Robot::addLog(CQLOG_DEBUG, "db", "return conn1");
 		return con;
 	} else {
 		if (curSize < maxSize) { //还可以创建新的连接
+			Robot::addLog(CQLOG_DEBUG, "db", "can create new");
 			con = this->createConnection();
 			if (con) {
 				++curSize;
+				Robot::addLog(CQLOG_DEBUG, "db", "return conn2");
 				return con;
 			} else {
+				Robot::addLog(CQLOG_DEBUG, "db", "return null1");
 				return NULL;
 			}
 		} else { //建立的连接数已经达到maxSize
+			Robot::addLog(CQLOG_DEBUG, "db", "return null2");
 			return NULL;
 		}
 	}
@@ -139,6 +152,23 @@ void DBUtil::destoryConnection(sql::Connection * conn) {
 			perror(e.what());
 		}
 		delete conn;
+	}
+}
+
+
+void DBUtil::refreshConnections() {
+	sql::Connection* conn;
+	//声明i为迭代器   
+	list<sql::Connection *>::iterator i;
+	for (i = connList.begin(); i != connList.end(); ++i) {
+		Robot::addLog(CQLOG_DEBUG, "db", "refreshing connections");
+		conn = *i;
+		if (!conn->isValid()) {
+			conn->reconnect();
+			Robot::addLog(CQLOG_DEBUG, "db", "refreshed connection");
+		} else {
+			perror("创建CONNECTION出错");
+		}
 	}
 }
 

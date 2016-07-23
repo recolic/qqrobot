@@ -14,8 +14,6 @@ private:
 	string url;
 	string username;
 	string password;
-	int size;
-	int curSize;
 	int maxSize;
 	static list<sql::Connection *> connList;
 	sql::Driver *driver;

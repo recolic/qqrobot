@@ -5,9 +5,8 @@ list<sql::Connection *> DBUtil::connList;
 sql::Connection * DBUtil::getConnection() {
 	sql::Connection*con;
 	Robot::addLog(CQLOG_DEBUG, "db", "get connection");
-
 	char buff[50];
-	sprintf(buff, "size=%d,cursize=%d",size, curSize);
+	//sprintf(buff, "size=%d,cursize=%d",size, curSize);
 	if (connList.size() > 0) {   //连接池容器中还有连接
 		con = connList.front(); //得到第一个连接
 		connList.pop_front();   //移除第一个连接
@@ -22,27 +21,18 @@ sql::Connection * DBUtil::getConnection() {
 			refreshConnections();
 		}
 		//如果连接为空，则创建连接出错
-		if (con == NULL) {
-			--curSize;
+		while (con == NULL) {
+			con = createConnection();
 		}
 		Robot::addLog(CQLOG_DEBUG, "db", "return conn1");
 		return con;
 	} else {
-		if (curSize < maxSize) { //还可以创建新的连接
-			Robot::addLog(CQLOG_DEBUG, "db", "can create new");
+		Robot::addLog(CQLOG_DEBUG, "db", "can create new");
+		do {
 			con = this->createConnection();
-			if (con) {
-				++curSize;
-				Robot::addLog(CQLOG_DEBUG, "db", "return conn2");
-				return con;
-			} else {
-				Robot::addLog(CQLOG_DEBUG, "db", "return null1");
-				return NULL;
-			}
-		} else { //建立的连接数已经达到maxSize
-			Robot::addLog(CQLOG_DEBUG, "db", "return null2");
-			return NULL;
-		}
+		} while (con == NULL);
+		Robot::addLog(CQLOG_DEBUG, "db", "return conn2");
+		return con;
 	}
 }
 
@@ -78,7 +68,6 @@ bool DBUtil::execute(string sql) {
 
 DBUtil::DBUtil() {
 	this->maxSize = 20;
-	this->curSize = 0;
 	//this->url = "tcp://hostname:3306";
 	//this->username = "";
 	//this->password = "";
@@ -99,7 +88,6 @@ DBUtil::~DBUtil() {
 	for (icon = connList.begin(); icon != connList.end(); ++icon) {
 		this->destoryConnection(*icon); //销毁连接池中的连接
 	}
-	curSize = 0;
 	connList.clear(); //清空连接池中的连接
 }
 
@@ -111,7 +99,6 @@ void DBUtil::initConnections() {
 		Robot::addLog(CQLOG_DEBUG, "db", "create connection");
 		if (conn) {
 			connList.push_back(conn);
-			++(this->curSize);
 		} else {
 			perror("创建CONNECTION出错");
 			Robot::addLog(CQLOG_ERROR, "db", "初始化创建CONNECTION出错");
@@ -164,8 +151,10 @@ void DBUtil::refreshConnections() {
 		Robot::addLog(CQLOG_DEBUG, "db", "refreshing connections");
 		conn = *i;
 		if (!conn->isValid()) {
-			conn->reconnect();
 			Robot::addLog(CQLOG_DEBUG, "db", "refreshed connection");
+			conn->close();
+			delete conn;
+			connList.remove(conn);
 		} else {
 			perror("创建CONNECTION出错");
 		}

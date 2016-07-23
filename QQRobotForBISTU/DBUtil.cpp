@@ -16,6 +16,7 @@ sql::Connection * DBUtil::getConnection() {
 			if (!con->reconnect()) {
 				con->close();
 				delete con;
+				connList.remove(con);
 				con = this->createConnection();
 			}
 			refreshConnections();
@@ -163,8 +164,10 @@ void DBUtil::refreshConnections() {
 		Robot::addLog(CQLOG_DEBUG, "db", "refreshing connections");
 		conn = *i;
 		if (!conn->isValid()) {
-			conn->reconnect();
 			Robot::addLog(CQLOG_DEBUG, "db", "refreshed connection");
+			if (!conn->reconnect()) {
+				connList.remove(conn);
+			}
 		} else {
 			perror("´´½¨CONNECTION³ö´í");
 		}

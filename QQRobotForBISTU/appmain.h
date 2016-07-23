@@ -1,2 +1,2 @@
-#define CQAPPID "cn.hylstudio.robot" //ÇëÐÞ¸ÄAppID
+#define CQAPPID "cn.lzhub.ticket" //ÇëÐÞ¸ÄAppID
 #define CQAPPINFO CQAPIVERTEXT "," CQAPPID

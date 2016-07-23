@@ -89,9 +89,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cn.hylstudio.robot.json" />
     <None Include="SetupPath.bat" />
     <None Include="ClassDiagram.cd" />
+    <None Include="cn.lzhub.ticket.json" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

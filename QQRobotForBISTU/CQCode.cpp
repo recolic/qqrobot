@@ -59,7 +59,7 @@ CQCode::~CQCode() {
 
 string CQCode::generateForAt() {
 	char* buff = new char[20];
-	sprintf(buff, "%d", qq);
+	sprintf(buff, "%u", qq & 0xFFFFFFFF);
 	ret += format;
 	ret.append(string(buff));
 	ret += "]";

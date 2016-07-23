@@ -35,7 +35,7 @@ int Signed::insertQQ() {
 	sql::PreparedStatement* stmt = db.prepareStatement(sql);
 	stmt->setInt(1, qq);
 	char buff[20];
-	sprintf(buff, "%d", qq);
+	sprintf(buff, "%u", qq & 0xFFFFFFFF);
 	stmt->setString(2, buff);
 	stmt->setInt(3, 100);
 	stmt->setInt(4, 1);
@@ -100,7 +100,6 @@ bool Signed::isFirstSigned() {
 
 	lastTime = res->getString("lastTime");
 	maxTimes = res->getInt("maxTimes");
-
 	cout << lastTime << endl;
 	cout << maxTimes << endl;
 
@@ -157,8 +156,8 @@ int Signed::sign(Message & m) {
 			ret += updateRecord();
 			success();
 		} else {
-			reply += "ÖØ¸´Ç©µ½£¡£¡½ûÑÔ1·ÖÖÓ";
-			Robot::setGroupBan(m.fromGroup, m.fromQQ, 60);
+			reply += "ÖØ¸´Ç©µ½£¡£¡½ûÑÔ10·ÖÖÓ";
+			Robot::setGroupBan(m.fromGroup, m.fromQQ, 600);
 		}
 	}
 	Robot::sendGroupMsg(m.fromGroup, reply);

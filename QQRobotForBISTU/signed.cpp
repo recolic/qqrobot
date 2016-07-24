@@ -142,7 +142,7 @@ void Signed::success() {
 
 int Signed::sign(Message & m) {
 	maxTimes = 1;
-	score = 110;
+	score = 100;
 	int ret = 0;
 	qq = m.fromQQ;
 	reply = CQCode::at(m.fromQQ);

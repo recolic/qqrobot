@@ -37,7 +37,7 @@ int Signed::insertQQ() {
 	char buff[20];
 	sprintf(buff, "%u", qq & 0xFFFFFFFF);
 	stmt->setString(2, buff);
-	stmt->setInt(3, 100);
+	stmt->setInt(3, 110);
 	stmt->setInt(4, 1);
 	ret = stmt->executeUpdate();
 	delete stmt;
@@ -142,7 +142,7 @@ void Signed::success() {
 
 int Signed::sign(Message & m) {
 	maxTimes = 1;
-	score = 100;
+	score = 110;
 	int ret = 0;
 	qq = m.fromQQ;
 	reply = CQCode::at(m.fromQQ);

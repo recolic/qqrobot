@@ -106,7 +106,7 @@ string Util::encode(unsigned char const *bytesToBeEncode, unsigned int len) {
 string Util::getWelComeMsg(GroupId groupId,QQ qq) {
 	string welCome;
 	char* buff = new char[20];
-	sprintf(buff,"%d", qq);
+	sprintf(buff,"%u", qq & 0xFFFFFFFF);
 	welCome += "[CQ:face,id=137]欢迎" + CQCode::at(qq) + "(" + string(buff) + ")加入本群。\n"
 		"[CQ:face,id=137]请自行删掉叹号，按格式(16";
 	if (groupId == 513289848) {
@@ -118,6 +118,9 @@ string Util::getWelComeMsg(GroupId groupId,QQ qq) {
 		"[CQ:face,id=137]请仔细阅读群须知&群公告后再来提问QAQ。。。\n"
 		"[CQ:face,id=137]群文件和相册也有一些资料可以参考~\n"
 		"ps：严禁调戏机器人！违者禁言！！";
+	if (groupId == 513505543) {
+		welCome += "想调戏机器人私聊小冰二号啊~~";
+	}
 	delete buff;
 	return welCome;
 }

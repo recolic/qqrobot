@@ -17,8 +17,11 @@ private:
 	int getTimes();//获取今天次序
 	bool isFirstSigned();
 	void success();
+	
 public:
 	static DBUtil db;
+	bool existQQ(QQ qq);
+	int getScore(QQ qq);
 	int sign(Message& m);
 	Signed();
 	Signed(Message& mm);

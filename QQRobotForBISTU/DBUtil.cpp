@@ -5,35 +5,43 @@ list<sql::Connection *> DBUtil::connList;
 sql::Connection * DBUtil::getConnection() {
 	sql::Connection*con;
 	Robot::addLog(CQLOG_DEBUG, "db", "get connection");
-	char buff[50];
+	//char buff[50];
 	//sprintf(buff, "size=%d,cursize=%d",size, curSize);
-	if (connList.size() > 0) {   //连接池容器中还有连接
+
+	while (connList.size() > 0) {
 		con = connList.front(); //得到第一个连接
 		connList.pop_front();   //移除第一个连接
 		Robot::addLog(CQLOG_DEBUG, "db", "get first cached conn");
-		if (!con->isValid()) {   //如果连接已经被关闭，删除后重新建立一个
-			Robot::addLog(CQLOG_DEBUG, "db", "conn closed,get new");
-			if (!con->reconnect()) {
-				con->close();
-				delete con;
-				con = this->createConnection();
-			}
-			refreshConnections();
+		if (con != NULL && con->isValid()) {
+			return con;
 		}
-		//如果连接为空，则创建连接出错
-		while (con == NULL) {
-			con = createConnection();
-		}
-		Robot::addLog(CQLOG_DEBUG, "db", "return conn1");
-		return con;
-	} else {
-		Robot::addLog(CQLOG_DEBUG, "db", "can create new");
-		do {
-			con = this->createConnection();
-		} while (con == NULL);
-		Robot::addLog(CQLOG_DEBUG, "db", "return conn2");
-		return con;
 	}
+	Robot::addLog(CQLOG_DEBUG, "db", "can create new");
+	do {
+		con = this->createConnection();
+	} while (con == NULL || !con->isValid());		
+
+	//if (connList.size() > 0) {   //连接池容器中还有连接
+	//	con = connList.front(); //得到第一个连接
+	//	connList.pop_front();   //移除第一个连接
+	//	Robot::addLog(CQLOG_DEBUG, "db", "get first cached conn");
+	//	if (con != NULL && !con->isValid()) {   //如果连接已经被关闭，删除后重新建立一个
+	//		Robot::addLog(CQLOG_DEBUG, "db", "conn closed,get new");
+	//		delete con;
+	//		do {
+	//			con = this->createConnection();
+	//		} while (con == NULL);
+	//		//如果连接为空，则创建连接出错
+	//	}
+	//	Robot::addLog(CQLOG_DEBUG, "db", "return conn1");
+	//} else {
+	//	Robot::addLog(CQLOG_DEBUG, "db", "can create new");
+	//	do {
+	//		con = this->createConnection();
+	//	} while (con == NULL);
+	//	Robot::addLog(CQLOG_DEBUG, "db", "return conn2");
+	//}
+	return con;
 }
 
 sql::ResultSet * DBUtil::executeQuery(string sql) {
@@ -62,7 +70,7 @@ sql::PreparedStatement * DBUtil::prepareStatement(string sql) {
 
 bool DBUtil::execute(string sql) {
 	sql::Statement *stmt = createStatement();
-	return stmt->execute(sql);;
+	return stmt->execute(sql);
 }
 
 
@@ -80,7 +88,6 @@ DBUtil::DBUtil() {
 		Robot::addLog(CQLOG_ERROR, "db", "运行出错了");
 		perror("运行出错了\n");
 	}
-	//initConnections();
 }
 
 DBUtil::~DBUtil() {

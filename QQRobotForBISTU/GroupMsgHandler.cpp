@@ -1,12 +1,17 @@
 ﻿#include "stdafx.h"
 #include "GroupMsgHandler.h"
 #include "Util.h"
+#include "DBUtil.h"
 #include "Robot.h"
 #include "PersonInfo.h"
 #include "CQCode.h"
 #include "signed.h"
 #include <regex>
+#include <driver.h>
+#include <statement.h>
+#include <prepared_statement.h>
 int GroupMsgHandler::flag = 0;
+map<GroupId, int> GroupMsgHandler::count;
 GroupMsgHandler::GroupMsgHandler() {
 }
 
@@ -22,14 +27,37 @@ int32_t GroupMsgHandler::handle(Message& m) {
 		//Robot::sendGroupMsg(m.fromGroup, Util::getWelComeMsg());
 		//Robot::addLog(CQLOG_INFOSEND, "test", str);
 	string content(m.content);
+	
+	
 	if (!content.compare("签到")) {
-		Signed s(m);
+		Signed s;
+		s.sign(m);
 		reply = true;
 	} else {
 		if (flag == 0) {
 			flag = 1;
 			Robot::addLog(CQLOG_DEBUG, "db", "init");
 			Signed::db.initConnections();
+		}
+		if (++count[m.fromGroup] == 100) {
+			count[m.fromGroup] = 0;
+			string msg = CQCode::at(m.fromQQ);
+			DBUtil db;
+			Signed s(m);
+			if (s.existQQ(m.fromQQ)) {
+				string sql = "UPDATE `db_users`.`t_users` SET `score` = score + 100 WHERE `qq` = ?;";
+				sql::PreparedStatement *stmt = db.prepareStatement(sql);
+				stmt->setInt(1, m.fromQQ);
+				stmt->execute();
+				msg += "你是第100句发言的\n奖励金币100~~,计数清零~\n当前余额：";
+				char buff[20];
+				sprintf(buff, "%d", s.getScore(m.fromQQ));
+				msg += string(buff);
+			} else {
+				msg += "你从未签到过，本次金币赠送失败\n请发送“签到”后再试。";
+			}
+			Robot::sendGroupMsg(m.fromGroup, msg);
+			reply = true;
 		}
 	}
 	

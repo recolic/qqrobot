@@ -140,6 +140,15 @@ void Signed::success() {
 	reply += string(buff);
 }
 
+bool Signed::existQQ(QQ qq) {
+	this->qq = qq;
+	return exist();
+}
+
+int Signed::getScore(QQ qq) {
+	return score;
+}
+
 int Signed::sign(Message & m) {
 	maxTimes = 1;
 	score = 100;
@@ -168,7 +177,6 @@ Signed::Signed() {
 }
 
 Signed::Signed(Message & m){
-	sign(m);
 }
 
 Signed::~Signed() {

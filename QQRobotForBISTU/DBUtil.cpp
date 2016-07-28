@@ -12,14 +12,26 @@ sql::Connection * DBUtil::getConnection() {
 		con = connList.front(); //得到第一个连接
 		connList.pop_front();   //移除第一个连接
 		Robot::addLog(CQLOG_DEBUG, "db", "get first cached conn");
-		if (con != NULL && con->isValid()) {
-			return con;
+		if (con != NULL){
+			if (con->isValid()) {
+				return con;
+			} else {
+				delete con;
+			}
 		}
+
 	}
 	Robot::addLog(CQLOG_DEBUG, "db", "can create new");
-	do {
+	while(true){
 		con = this->createConnection();
-	} while (con == NULL || !con->isValid());		
+		if (con != NULL) {
+			if (con->isValid()) {
+				return con;
+			} else {
+				delete con;
+			}
+		}
+	}
 
 	//if (connList.size() > 0) {   //连接池容器中还有连接
 	//	con = connList.front(); //得到第一个连接
@@ -41,7 +53,6 @@ sql::Connection * DBUtil::getConnection() {
 	//	} while (con == NULL);
 	//	Robot::addLog(CQLOG_DEBUG, "db", "return conn2");
 	//}
-	return con;
 }
 
 sql::ResultSet * DBUtil::executeQuery(string sql) {
@@ -79,6 +90,7 @@ DBUtil::DBUtil() {
 	//this->url = "tcp://hostname:3306";
 	//this->username = "";
 	//this->password = "";
+
 	try {
 		this->driver = get_driver_instance();
 	} catch (sql::SQLException&e) {

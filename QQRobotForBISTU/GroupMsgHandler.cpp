@@ -51,7 +51,7 @@ int32_t GroupMsgHandler::handle(Message& m) {
 				stmt->execute();
 				msg += "你是第100句发言的\n奖励金币100~~,计数清零~\n当前余额：";
 				char buff[20];
-				sprintf(buff, "%d", s.getScore(m.fromQQ));
+				sprintf(buff, "%d", s.getScore(m.fromQQ) + 100);
 				msg += string(buff);
 			} else {
 				msg += "你从未签到过，本次金币赠送失败\n请发送“签到”后再试。";

@@ -64,6 +64,7 @@ CQEVENT(int32_t, __eventRequest_AddGroup, 32)(int32_t subType, int32_t sendTime,
 */
 CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, int64_t beingOperateQQ) {
 	Robot::sendGroupMsg(fromGroup, Util::getWelComeMsg(fromGroup, beingOperateQQ));
+	
 	string record;
 	if (fromGroup == 513289848) {
 		Robot::setGroupCard(fromGroup, beingOperateQQ, "!16专业 真实姓名");
@@ -73,6 +74,7 @@ CQEVENT(int32_t, __eventSystem_GroupMemberIncrease, 32)(int32_t subType, int32_t
 		record = CQCode::record("2.mp3", false);
 	}
 	Robot::sendGroupMsg(fromGroup, record);
+	Robot::sendPrivateMsg(beingOperateQQ, "私聊发送#help获取帮助列表哦~~");
 	Robot::sendPrivateMsg(beingOperateQQ, record);
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }

@@ -117,6 +117,7 @@ string Util::getWelComeMsg(GroupId groupId,QQ qq) {
 	welCome += " 真实姓名)修改名片~~\n"
 		"[CQ:face,id=137]请仔细阅读群须知&群公告后再来提问QAQ。。。\n"
 		"[CQ:face,id=137]群文件和相册也有一些资料可以参考~\n"
+		"[CQ:face,id=137]私聊我发送#help获取帮助列表\n"
 		"ps：严禁调戏机器人！违者禁言！！";
 	if (groupId == 513505543) {
 		welCome += "想调戏机器人私聊小冰二号啊~~";

@@ -2,6 +2,7 @@
 #define QQROBOT_UTIL_H
 #include "public.h"
 #include "DBUtil.h"
+
 class Util {
 private:
 	static inline bool iSbase64(unsigned char c);
@@ -13,6 +14,7 @@ public:
 	static string decode(const string & stringToBeDecode);
 	static string encode(unsigned char const* bytesToBeEncode, unsigned int len);
 	static string getWelComeMsg();
+	static bool getScore(DBUtil& db, QQ qq, int& score);
 };
 
 #endif // !UTIL_H

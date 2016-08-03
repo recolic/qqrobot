@@ -4,6 +4,7 @@
 #include <mysql_connection.h>
 #include <driver.h>
 #include <statement.h>
+#include <prepared_statement.h>
 #include <resultset.h>
 #include <stdexcept>
 #include <exception>

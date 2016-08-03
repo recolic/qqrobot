@@ -14,8 +14,10 @@ sql::Connection * DBUtil::getConnection() {
 		Robot::addLog(CQLOG_DEBUG, "db", "get first cached conn");
 		if (con != NULL){
 			if (con->isValid()) {
+				Robot::addLog(CQLOG_DEBUG, "db", "first get");
 				return con;
 			} else {
+				Robot::addLog(CQLOG_DEBUG, "db", "delete first");
 				delete con;
 			}
 		}
@@ -26,8 +28,10 @@ sql::Connection * DBUtil::getConnection() {
 		con = this->createConnection();
 		if (con != NULL) {
 			if (con->isValid()) {
+				Robot::addLog(CQLOG_DEBUG, "db", "create success");
 				return con;
 			} else {
+				Robot::addLog(CQLOG_DEBUG, "db", "create failed");
 				delete con;
 			}
 		}
@@ -86,6 +90,7 @@ bool DBUtil::execute(string sql) {
 
 
 DBUtil::DBUtil() {
+	//Robot::addLog(CQLOG_DEBUG, "debug", "DBUtil 1");
 	this->maxSize = 20;
 	//this->url = "tcp://hostname:3306";
 	//this->username = "";
@@ -103,6 +108,7 @@ DBUtil::DBUtil() {
 }
 
 DBUtil::~DBUtil() {
+	Robot::addLog(CQLOG_DEBUG, "debug", "DBUtil 2");
 	list<sql::Connection*>::iterator icon;
 	for (icon = connList.begin(); icon != connList.end(); ++icon) {
 		this->destoryConnection(*icon); //销毁连接池中的连接
@@ -149,6 +155,7 @@ void DBUtil::releaseConnection(sql::Connection * conn) {
 }
 
 void DBUtil::destoryConnection(sql::Connection * conn) {
+	Robot::addLog(CQLOG_DEBUG, "db", "销毁一个连接");
 	if (conn) {
 		try {
 			conn->close();

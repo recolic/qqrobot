@@ -7,6 +7,7 @@ using namespace std;
 
 int Robot::authCode = 0;
 Robot::Robot() {
+	//Robot::addLog(CQLOG_DEBUG, "debug", "Robot 1");
 	privateMsgHandler = new PrivateMsgHandler();
 	groupMsgHandler = new GroupMsgHandler();
 }
@@ -51,6 +52,7 @@ int32_t Robot::handleMsg(Message & m) {
 }
 
 Robot::~Robot() {
+	Robot::addLog(CQLOG_DEBUG, "debug", "Robot 2");
 	delete privateMsgHandler;
 	delete groupMsgHandler;
 }

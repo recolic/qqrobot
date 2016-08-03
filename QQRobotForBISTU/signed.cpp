@@ -4,7 +4,6 @@
 #include <resultset.h>
 #include <statement.h>
 #include <prepared_statement.h>
-
 #include "signed.h"
 #include "public.h"
 #include "Robot.h"

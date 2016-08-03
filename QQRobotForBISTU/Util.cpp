@@ -113,3 +113,17 @@ string Util::getWelComeMsg() {
 
 	return welCome;
 }
+
+bool Util::getScore(DBUtil& db, QQ qq, int& score){
+	string sql = "SELECT * FROM db_users.t_users where qq=?";
+	sql::PreparedStatement* stmt = db.prepareStatement(sql);
+	stmt->setInt(1, qq);
+	sql::ResultSet* res = stmt->executeQuery();
+	bool ret = res->next();
+	if (ret) {
+		score = res->getInt("score");
+	}
+	delete stmt;
+	delete res;
+	return ret;
+}

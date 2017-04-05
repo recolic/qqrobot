@@ -196,3 +196,12 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+########### Recolic Added
+# I'm not interested in editing source code.
+QQRobotForBISTU/
+QQRobotForBISTU.sln
+*.png
+*.rgignore
+outputFiles/
+########### End Recolic gitignore

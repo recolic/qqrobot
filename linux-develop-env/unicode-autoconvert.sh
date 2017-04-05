@@ -4,7 +4,7 @@ farr=($(ls ../QQRobotForBISTU | grep -E '(\.cpp$)|(\.hpp$)|(\.h$)|(\.c$)'))
 for fpath in "${farr[@]}" 
 do
 	:
-	if file --mime-encoding $fpath | grep 'iso-8859-1'; then
+	if file --mime-encoding ../QQRobotForBISTU/$fpath | grep 'iso-8859-1'; then
 		echo "Converting $fpath ..."
 	else
 		echo "Refused: $fpath"
@@ -16,5 +16,5 @@ do
 		echo "(At ../QQRobotForBISTU/$fpath)"
 	fi
 done
-echo "Done."
+echo "Finished!"
 
